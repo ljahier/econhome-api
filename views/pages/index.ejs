@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,8 @@
         <title>Accueil - EcoN'Home</title>
     </head>
     <body>
+        <% if (typeof data != 'undefined') {%>
         <h1>Data: <%= data %></h1>
+        <% } %>
     </body>
 </html>

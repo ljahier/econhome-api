@@ -1,10 +1,11 @@
 module.exports = (app, ejs, fs) => {
     app.get('/', (req, res) => {
-        fs.readFile('message.txt', (err, data) => {
+        fs.readFile('data.txt', (err, data) => {
             if (err) throw err;
-            res.render('pages/index', [
-                data = data
-            ])
+            console.log(data)
+            res.render('pages/index', {
+                data: data
+            })
         });
 
     })
@@ -15,9 +16,9 @@ module.exports = (app, ejs, fs) => {
         res.send(req.params.data);
     })
     app.get('/lightning/:data', (req, res) => {
-        res.send(req.params.data);
-        fs.writeFile('message.txt', req.params.data, (err) => {
+        fs.writeFile('data.txt', req.params.data, (err) => {
             if (err) throw err;
+            res.send(req.params.data);
         });
     })
 }
