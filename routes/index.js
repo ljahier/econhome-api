@@ -1,8 +1,12 @@
 module.exports = (app) => {
     app.get('/', (req, res) => {
-      res.render('pages/index', [
-          username = "Lucas"
-      ])
+        fs.readFile('message.txt', (err, data) => {
+            if (err) throw err;
+            res.render('pages/index', [
+                data = data
+            ])
+        });
+
     })
     app.get('/water/:data', (req, res) => {
         res.send(req.params.data);
@@ -12,5 +16,8 @@ module.exports = (app) => {
     })
     app.get('/lightning/:data', (req, res) => {
         res.send(req.params.data);
+        fs.writeFile('message.txt', req.params.data, (err) => {
+            if (err) throw err;
+        });
     })
 }
