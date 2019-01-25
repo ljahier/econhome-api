@@ -1,4 +1,4 @@
-module.exports = (app) => {
+module.exports = (app, ejs, fs) => {
     app.get('/', (req, res) => {
         fs.readFile('message.txt', (err, data) => {
             if (err) throw err;
