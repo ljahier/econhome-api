@@ -1,25 +1,30 @@
 {
-  "name": "nodejs-api",
+  "name": "econhome-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EcoNHome/nodejs-api.git"
+    "url": "git+https://github.com/EcoNHome/econhome-api.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/EcoNHome/nodejs-api/issues"
+    "url": "https://github.com/EcoNHome/econhome-api/issues"
   },
-  "homepage": "https://github.com/EcoNHome/nodejs-api#readme",
+  "homepage": "https://github.com/EcoNHome/econhome-api#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "mysql": "^2.16.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
   }
 }
