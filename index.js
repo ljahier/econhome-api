@@ -2,11 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const fs = require('fs');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const crypto = require('crypto');
 
 const port = 8080 | process.env.PORT;
-let config = require('./config.json');
 
 const app = express();
 
@@ -16,7 +15,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs');
 
-require('./routes/index')(app, ejs, fs, mysql, config, crypto);
+require('./routes/index')(app, ejs, fs, mysql, crypto);
 
 let pass = crypto.createHmac('sha256', 'admin');
 
