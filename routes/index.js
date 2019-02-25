@@ -5,15 +5,15 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
         let config = require('./config.json');
         pool  = mysql.createPool({
             connectionLimit : 5,
-            host            : config.database.user,
+            host            : config.database.host,
             user            : config.database.user,
             password        : config.database.password,
-            database        : config.database.host
+            database        : config.database.database
         });
     } catch (e) {
         pool  = mysql.createPool({
             connectionLimit : 5,
-            host            : process.env.MYSQL_ADDON_USER,
+            host            : process.env.MYSQL_ADDON_HOST,
             user            : process.env.MYSQL_ADDON_USER,
             password        : process.env.MYSQL_ADDON_PASSWORD,
             database        : process.env.MYSQL_ADDON_DB
