@@ -1,0 +1,2 @@
+Matcher le mot de passe dans la base de donnée // dans le controller
+condition si la variable auth existe. // dans la vue
