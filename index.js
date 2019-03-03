@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const fs = require('fs');
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const crypto = require('crypto');
 
 const port = 8080 | process.env.PORT;
