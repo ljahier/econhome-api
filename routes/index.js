@@ -8,6 +8,23 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
         port: process.env.MYSQL_ADDON_PORT
     });
 
+    function getDateTime() {
+        let date = new Date();
+        let hour = date.getHours();
+        let min  = date.getMinutes();
+        let sec  = date.getSeconds();
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day  = date.getDate();
+
+        hour = (hour < 10 ? "0" : "") + hour;
+        min = (min < 10 ? "0" : "") + min;
+        sec = (sec < 10 ? "0" : "") + sec;
+        month = (month < 10 ? "0" : "") + month;
+        day = (day < 10 ? "0" : "") + day;
+        
+        return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
+    }
 
     app.get('/', (req, res) => {
         connection.query(
@@ -19,10 +36,11 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
     })
 
     app.get('/water/:data', (req, res) => {
-        let sensorData = { sensor: `water`, data: `${req.params.data}` }
+        let sensorData = { sensor: `water`, data: `${req.params.data}`, created_at: `${getDateTime()}` }
         connection.query(`INSERT INTO data SET ?`, sensorData, () => {
-            res.redirect(200, '/');
+            res.end('Data insert on database');
         });
+        console.log(connection.sql);
     })
 
     app.get('/water', (req, res) => {
@@ -30,9 +48,9 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
     })
 
     app.get('/temperature/:data', (req, res) => {
-        let sensorData = { sensor: `temperature`, data: `${req.params.data}` }
+        let sensorData = { sensor: `temperature`, data: `${req.params.data}`, created_at: `${getDateTime()}` }
         connection.query(`INSERT INTO data SET ?`, sensorData, () => {
-            res.redirect(200, '/');
+            res.end('Data insert on database')
         });
     })
 
@@ -41,9 +59,9 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
     })
 
     app.get('/lightning/:data', (req, res) => {
-        let sensorData = { sensor: `lightning`, data: `${req.params.data}` }
+        let sensorData = { sensor: `lightning`, data: `${req.params.data}`, created_at: `${getDateTime()}` }
         connection.query(`INSERT INTO data SET ?`, sensorData, () => {
-            res.redirect(200, '/');
+            res.end('Data insert on database')
         });
     })
     app.get('/lightning', (req, res) => {
