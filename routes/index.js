@@ -39,8 +39,6 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
         connection.query(
             "SELECT * FROM `data` WHERE sensor = 'water'",
             function (err, results) {
-                console.log(err)
-                console.log(results)
                 res.json(results)
             }
         );
@@ -50,8 +48,6 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
         connection.query(
             "SELECT * FROM `data` WHERE sensor = 'temperature'",
             function (err, results) {
-                console.log(err)
-                console.log(results)
                 res.json(results)
             }
         );
@@ -61,8 +57,6 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
         connection.query(
             "SELECT * FROM `data` WHERE sensor = 'lightning'",
             function (err, results) {
-                console.log(err)
-                console.log(results)
                 res.json(results)
             }
         );
