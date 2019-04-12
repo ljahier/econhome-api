@@ -72,6 +72,7 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
     })
 
     app.get('/temperature/:data', (req, res) => {
+        let dataParam = req.params.data
         if (isNaN(dataParam)) res.end('You must enter a number in data url')
         let sensorData = { sensor: `temperature`, data: `${req.params.data}`, created_at: `${getDateTime()}` }
         connection.query('INSERT INTO `data` SET ?', sensorData, () => {
@@ -80,6 +81,7 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
     })
 
     app.get('/lightning/:data', (req, res) => {
+        let dataParam = req.params.data
         if (isNaN(dataParam)) res.end('You must enter a number in data url')
         let sensorData = { sensor: `lightning`, data: `${req.params.data}`, created_at: `${getDateTime()}` }
         connection.query('INSERT INTO `data` SET ?', sensorData, () => {
