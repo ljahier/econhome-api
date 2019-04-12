@@ -1,6 +1,6 @@
 module.exports = (app, ejs, fs, mysql, crypto) => {
 
-    connection = mysql.createConnection({
+    let connection = mysql.createConnection({
         host: process.env.MYSQL_ADDON_HOST,
         user: process.env.MYSQL_ADDON_USER,
         database: process.env.MYSQL_ADDON_DB,
@@ -28,43 +28,69 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
 
     app.get('/', (req, res) => {
         connection.query(
-            'SELECT * FROM `data`',
+            "SELECT * FROM `data`",
             function (err, results) {
                 res.json(results)
             }
         );
     })
 
-    app.get('/water/:data', (req, res) => {
-        let sensorData = { sensor: `water`, data: `${req.params.data}`, created_at: `${getDateTime()}` }
-        connection.query(`INSERT INTO data SET ?`, sensorData, () => {
-            res.end('Data insert on database');
-        });
-        console.log(connection.sql);
-    })
-
     app.get('/water', (req, res) => {
-        res.send('Pouet');
-    })
-
-    app.get('/temperature/:data', (req, res) => {
-        let sensorData = { sensor: `temperature`, data: `${req.params.data}`, created_at: `${getDateTime()}` }
-        connection.query(`INSERT INTO data SET ?`, sensorData, () => {
-            res.end('Data insert on database')
-        });
+        connection.query(
+            "SELECT * FROM `data` WHERE sensor = 'water'",
+            function (err, results) {
+                console.log(err)
+                console.log(results)
+                res.json(results)
+            }
+        );
     })
 
     app.get('/temperature', (req, res) => {
-        res.send('Pouet');
+        connection.query(
+            "SELECT * FROM `data` WHERE sensor = 'temperature'",
+            function (err, results) {
+                console.log(err)
+                console.log(results)
+                res.json(results)
+            }
+        );
     })
 
-    app.get('/lightning/:data', (req, res) => {
-        let sensorData = { sensor: `lightning`, data: `${req.params.data}`, created_at: `${getDateTime()}` }
-        connection.query(`INSERT INTO data SET ?`, sensorData, () => {
+    app.get('/lightning', (req, res) => {
+        connection.query(
+            "SELECT * FROM `data` WHERE sensor = 'lightning'",
+            function (err, results) {
+                console.log(err)
+                console.log(results)
+                res.json(results)
+            }
+        );
+    })
+
+    app.get('/water/:data', (req, res) => {
+        let dataParam = req.params.data
+        if (isNaN(dataParam)) res.end('You must enter a number in data url')
+        let sensorData = { sensor: `water`, data: `${req.params.data}`, created_at: `${getDateTime()}` }
+        connection.query('INSERT INTO `data` SET ?', sensorData, () => {
+            res.end('Data insert on database');
+        });
+    })
+
+    app.get('/temperature/:data', (req, res) => {
+        if (isNaN(dataParam)) res.end('You must enter a number in data url')
+        let sensorData = { sensor: `temperature`, data: `${req.params.data}`, created_at: `${getDateTime()}` }
+        connection.query('INSERT INTO `data` SET ?', sensorData, () => {
             res.end('Data insert on database')
         });
     })
-    app.get('/lightning', (req, res) => {
-        res.send('Pouet');
+
+    app.get('/lightning/:data', (req, res) => {
+        if (isNaN(dataParam)) res.end('You must enter a number in data url')
+        let sensorData = { sensor: `lightning`, data: `${req.params.data}`, created_at: `${getDateTime()}` }
+        connection.query('INSERT INTO `data` SET ?', sensorData, () => {
+            res.end('Data insert on database')
+        });
     })
+
 }

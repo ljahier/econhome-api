@@ -5,7 +5,7 @@ const fs = require('fs');
 const mysql = require('mysql');
 const crypto = require('crypto');
 
-const port = 8080 | process.env.PORT;
+const port = process.env.PORT || 8081;
 
 const app = express();
 
