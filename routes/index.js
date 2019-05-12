@@ -11,18 +11,18 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
     function getDateTime() {
         let date = new Date();
         let hour = date.getHours();
-        let min  = date.getMinutes();
-        let sec  = date.getSeconds();
+        let min = date.getMinutes();
+        let sec = date.getSeconds();
         let year = date.getFullYear();
         let month = date.getMonth() + 1;
-        let day  = date.getDate();
+        let day = date.getDate();
 
         hour = (hour < 10 ? "0" : "") + hour;
         min = (min < 10 ? "0" : "") + min;
         sec = (sec < 10 ? "0" : "") + sec;
         month = (month < 10 ? "0" : "") + month;
         day = (day < 10 ? "0" : "") + day;
-        
+
         return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
     }
 
@@ -89,4 +89,27 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
         });
     })
 
+    app.post('/ordre', (req, res) => {
+        let dataParse = parseInt(req.body.data)
+        if (dataParse === 22) {
+            let sensorData = { grade: `confort`, temperature: `${dataParse}`, created_at: `${getDateTime()}` }
+            connection.query('INSERT INTO `temperature` SET ?', sensorData, () => {
+                res.end('Data insert on database')
+            });
+        }
+
+        if (dataParse === 19) {
+            let sensorData = { grade: `normal`, temperature: `${dataParse}`, created_at: `${getDateTime()}` }
+            connection.query('INSERT INTO `temperature` SET ?', sensorData, () => {
+                res.end('Data insert on database')
+            });
+        }
+
+        if (dataParse === 17) {
+            let sensorData = { grade: `economique`, temperature: `${dataParse}`, created_at: `${getDateTime()}` }
+            connection.query('INSERT INTO `temperature` SET ?', sensorData, () => {
+                res.end('Data insert on database')
+            });
+        }
+    })
 }
