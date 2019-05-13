@@ -46,7 +46,7 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
 
     app.get('/temperature', (req, res) => {
         connection.query(
-            "SELECT * FROM `data` WHERE sensor = 'temperature'",
+            "SELECT * FROM `data` WHERE sensor = 'temperature' ORDER BY id DESC LIMIT 15",
             function (err, results) {
                 res.json(results)
             }
@@ -111,5 +111,14 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
                 res.end('Data insert on database')
             });
         }
+    })
+
+    app.get('/users/temperature', (req, res) => {
+        connection.query(
+            "SELECT * FROM `temperature` ORDER BY id DESC LIMIT 1",
+            function (err, results) {
+                res.json(results)
+            }
+        );
     })
 }
