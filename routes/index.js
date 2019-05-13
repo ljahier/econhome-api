@@ -117,7 +117,7 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
         connection.query(
             "SELECT * FROM `temperature` ORDER BY id DESC LIMIT 1",
             function (err, results) {
-                res.json(results)
+                res.json(results[0]["temperature"])
             }
         );
     })
