@@ -89,7 +89,7 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
         });
     })
 
-    app.post('/ordre', (req, res) => {
+    app.post('/users/temperature', (req, res) => {
         let dataParse = parseInt(req.body.data)
         if (dataParse === 22) {
             let sensorData = { grade: `confort`, temperature: `${dataParse}`, created_at: `${getDateTime()}` }
@@ -118,6 +118,49 @@ module.exports = (app, ejs, fs, mysql, crypto) => {
             "SELECT * FROM `temperature` ORDER BY id DESC LIMIT 1",
             function (err, results) {
                 res.json(results[0]["temperature"])
+            }
+        );
+    })
+
+    app.post('/users/lightning', (req, res) => {
+        let dataParse = parseInt(req.body.data)
+        let sensorData = { lux: `${dataParse}`, created_at: `${getDateTime()}` }
+        connection.query('INSERT INTO `lightning` SET ?', sensorData, () => {
+            res.end('Data insert on database')
+        });
+    })
+
+    app.get('/users/lightning', (req, res) => {
+        connection.query(
+            "SELECT * FROM `lightning` ORDER BY id DESC LIMIT 1",
+            function (err, results) {
+                res.json(results[0]["lux"])
+            }
+        );
+    })
+
+    app.post('/users/water', (req, res) => {
+        let dataParse = parseInt(req.body.data)
+        if (dataParse === 70) {
+            let sensorData = { grade: `haut`, water: `${dataParse}`, created_at: `${getDateTime()}` }
+            connection.query('INSERT INTO `water` SET ?', sensorData, () => {
+                res.end('Data insert on database')
+            });
+        }
+
+        if (dataParse === 20) {
+            let sensorData = { grade: `basse`, water: `${dataParse}`, created_at: `${getDateTime()}` }
+            connection.query('INSERT INTO `water` SET ?', sensorData, () => {
+                res.end('Data insert on database')
+            });
+        }
+    })
+
+    app.get('/users/water', (req, res) => {
+        connection.query(
+            "SELECT * FROM `water` ORDER BY id DESC LIMIT 1",
+            function (err, results) {
+                res.json(results[0]["water"])
             }
         );
     })
